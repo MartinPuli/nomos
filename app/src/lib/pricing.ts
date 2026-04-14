@@ -62,6 +62,15 @@ export function computeSavings(subtasks: SubTask[]) {
   };
 }
 
-export function ethToUsd(eth: number, ethPriceUsd = 3000): number {
+export const ETH_PRICE_USD = 3200;
+
+export function ethToUsd(eth: number, ethPriceUsd = ETH_PRICE_USD): number {
   return Number((eth * ethPriceUsd).toFixed(4));
+}
+
+export function ethToUsdc(eth: number): string {
+  const usdc = eth * ETH_PRICE_USD;
+  if (usdc < 0.01) return usdc.toFixed(4);
+  if (usdc < 1) return usdc.toFixed(3);
+  return usdc.toFixed(2);
 }

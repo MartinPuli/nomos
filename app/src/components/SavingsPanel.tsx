@@ -1,4 +1,4 @@
-import { ethToUsd } from "@/lib/pricing";
+import { ethToUsdc } from "@/lib/pricing";
 
 export function SavingsPanel({
   naive,
@@ -75,7 +75,7 @@ export function SavingsPanel({
               cheaper than Opus-for-everything
             </div>
             <div style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginTop: "3px", fontFamily: "JetBrains Mono, monospace" }}>
-              saved {fmt(savedEth)} ETH
+              saved {ethToUsdc(savedEth)} USDC
             </div>
           </div>
 
@@ -111,8 +111,7 @@ export function SavingsPanel({
                 <span style={{ fontSize: "0.75rem", color: "var(--text-dim)" }}>Naive — all Opus</span>
               </div>
               <div style={{ textAlign: "right" }}>
-                <span style={{ fontSize: "0.75rem", fontFamily: "JetBrains Mono, monospace", color: "var(--text-dim)" }}>{fmt(naive)} ETH</span>
-                <span style={{ fontSize: "0.6875rem", color: "var(--text-muted)", marginLeft: "6px" }}>(${ethToUsd(naive).toFixed(3)})</span>
+                <span style={{ fontSize: "0.75rem", fontFamily: "JetBrains Mono, monospace", color: "var(--text-dim)" }}>{ethToUsdc(naive)} USDC</span>
               </div>
             </div>
             <div style={{ height: "6px", background: "var(--bg-elev2)", borderRadius: "3px" }}>
@@ -125,11 +124,10 @@ export function SavingsPanel({
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "7px" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "7px" }}>
                 <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: "var(--savings)", flexShrink: 0 }} />
-                <span style={{ fontSize: "0.75rem", color: "var(--text-dim)" }}>Routed — Gnomos</span>
+                <span style={{ fontSize: "0.75rem", color: "var(--text-dim)" }}>Routed — Nomos</span>
               </div>
               <div style={{ textAlign: "right" }}>
-                <span style={{ fontSize: "0.75rem", fontFamily: "JetBrains Mono, monospace", color: "var(--savings)", fontWeight: 700 }}>{fmt(actual)} ETH</span>
-                <span style={{ fontSize: "0.6875rem", color: "var(--text-muted)", marginLeft: "6px" }}>(${ethToUsd(actual).toFixed(3)})</span>
+                <span style={{ fontSize: "0.75rem", fontFamily: "JetBrains Mono, monospace", color: "var(--savings)", fontWeight: 700 }}>{ethToUsdc(actual)} USDC</span>
               </div>
             </div>
             <div style={{ height: "6px", background: "var(--bg-elev2)", borderRadius: "3px", overflow: "hidden" }}>

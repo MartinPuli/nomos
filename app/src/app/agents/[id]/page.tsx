@@ -4,7 +4,7 @@ import Link from "next/link";
 import { TierBadge } from "@/components/TierBadge";
 import { ensureSeeded } from "@/lib/seed";
 import { getAgent } from "@/lib/store";
-import { MODEL_RATES, taskPriceEth } from "@/lib/pricing";
+import { MODEL_RATES, taskPriceEth, ethToUsdc } from "@/lib/pricing";
 
 export const dynamic = "force-dynamic";
 
@@ -196,7 +196,7 @@ export default async function AgentDetail({ params }: { params: Promise<{ id: st
                     Est. / task
                   </div>
                   <div style={{ fontFamily: "JetBrains Mono, monospace", fontSize: "0.9375rem", fontWeight: 700, color: tc }}>
-                    {price.toFixed(6)} ETH
+                    {ethToUsdc(price)} USDC
                   </div>
                 </div>
               </div>

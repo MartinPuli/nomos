@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ethToUsdc } from "@/lib/pricing";
 import type { Team } from "@/lib/types";
 
 const VERTICAL_LABEL: Record<string, string> = {
@@ -105,10 +106,10 @@ export function TeamCard({ team }: { team: Team }) {
               className="num"
               style={{ fontSize: "0.9375rem", color: "var(--ink)", lineHeight: 1 }}
             >
-              {team.rent_price_eth_per_task.toFixed(4)}
+              {ethToUsdc(team.rent_price_eth_per_task)}
             </div>
             <div style={{ fontSize: "0.625rem", color: "var(--text-muted)", marginTop: "6px", textTransform: "uppercase", letterSpacing: "0.12em" }}>
-              ETH / task
+              USDC / task
             </div>
           </div>
           <div style={{ textAlign: "center" }}>
@@ -136,7 +137,7 @@ export function TeamCard({ team }: { team: Team }) {
               letterSpacing: "0.18em",
             }}
           >
-            {team.member_ids.length} agents · {team.tasks_completed.toLocaleString()} tasks
+            {team.member_ids.length} agents · {team.tasks_completed.toLocaleString("en-US")} tasks
           </span>
           <span
             style={{

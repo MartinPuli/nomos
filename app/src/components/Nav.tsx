@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { WalletButton } from "./WalletButton";
 
 const LINKS = [
   { href: "/",            label: "Marketplace" },
@@ -34,12 +35,12 @@ export function Nav() {
           href="/"
           style={{ display: "flex", alignItems: "center", gap: "9px", flexShrink: 0, textDecoration: "none" }}
         >
-          <Image src="/nomos-logo.svg" alt="Gnomos" width={30} height={30} priority />
+          <Image src="/nomos-logo.svg" alt="Nomos" width={30} height={30} priority />
           <span
             className="font-display"
             style={{ fontSize: "1.25rem", color: "var(--text)", lineHeight: 1, letterSpacing: "0.01em" }}
           >
-            Gnomos
+            nomos
           </span>
         </Link>
 
@@ -74,29 +75,8 @@ export function Nav() {
           })}
         </div>
 
-        {/* Wallet pill */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "6px",
-            padding: "5px 12px",
-            borderRadius: "999px",
-            background: "var(--bg-elev2)",
-            border: "1px solid var(--border)",
-            fontSize: "0.6875rem",
-            fontFamily: "JetBrains Mono, monospace",
-            color: "var(--text-muted)",
-            flexShrink: 0,
-            letterSpacing: "0.02em",
-          }}
-        >
-          <span
-            className="pulse-dot"
-            style={{ width: "6px", height: "6px", borderRadius: "50%", background: "var(--savings)", flexShrink: 0 }}
-          />
-          <span className="hidden sm:inline">0x1a2b…ef12</span>
-        </div>
+        {/* Wallet */}
+        <WalletButton />
       </div>
     </nav>
   );

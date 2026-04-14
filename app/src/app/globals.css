@@ -1,13 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..900;1,14..32,300..900&family=JetBrains+Mono:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,300..800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap");
 @import "tailwindcss";
-
-@font-face {
-  font-family: "Modak";
-  src: url("/fonts/Modak-Regular.ttf") format("truetype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
 
 /* ─── Design tokens ─────────────────────────────── */
 :root {
@@ -81,8 +73,9 @@ html { scroll-behavior: smooth; }
 html, body {
   background: var(--bg);
   color: var(--text);
-  font-family: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-family: "DM Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   font-feature-settings: "cv02","cv03","cv04","cv11";
+  font-optical-sizing: auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
@@ -139,7 +132,7 @@ html, body {
 .tier-bar-opus   { border-top: 2.5px solid var(--tier-opus);   }
 
 /* ─── Typography helpers ─────────────────────────── */
-.font-display { font-family: "Modak", sans-serif; }
+.font-display { font-family: "Space Grotesk", "DM Sans", sans-serif; font-weight: 700; }
 .font-mono    { font-family: "JetBrains Mono", ui-monospace, monospace; }
 
 /* ─── Animations ─────────────────────────────────── */

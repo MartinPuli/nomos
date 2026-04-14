@@ -12,7 +12,7 @@ import { listAgents, listRuns } from "@/lib/store";
 
 export const dynamic = "force-dynamic";
 
-const PARTNERS = ["anthropic", "kaszek", "stanford · ai"];
+const PARTNERS = ["kaszek"];
 
 export default function MarketplacePage() {
   ensureSeeded();

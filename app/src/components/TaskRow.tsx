@@ -1,4 +1,5 @@
 import { TierBadge } from "./TierBadge";
+import { ethToUsdc } from "@/lib/pricing";
 import type { SubTask, Agent } from "@/lib/types";
 
 const STATUS_LABEL: Record<SubTask["status"], string> = {
@@ -82,7 +83,7 @@ export function TaskRow({ task, agent }: { task: SubTask; agent?: Agent }) {
             <span style={{ fontFamily: "monospace", color: "var(--text)" }}>{task.actual_tokens.toLocaleString()}</span> tokens
           </span>
           <span style={{ color: "var(--text-dim)" }}>
-            <span style={{ fontFamily: "monospace", color: "var(--tier-haiku)", fontWeight: 600 }}>{task.cost_eth.toFixed(6)}</span> ETH
+            <span style={{ fontFamily: "monospace", color: "var(--tier-haiku)", fontWeight: 600 }}>{ethToUsdc(task.cost_eth)}</span> USDC
           </span>
         </div>
       )}
