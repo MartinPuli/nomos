@@ -1,11 +1,12 @@
 import { ensureSeeded } from "@/lib/seed";
 import { listAgents, saveRun } from "@/lib/store";
+import { getTeam, teamMembers } from "@/lib/teams";
 import { decompose } from "@/lib/orchestrator";
 import { classify } from "@/lib/classifier";
 import { selectAgent, tierToModel } from "@/lib/router";
 import { runSubagent } from "@/lib/executor";
 import { computeSavings, taskPriceEth } from "@/lib/pricing";
-import type { OrchestrationEvent, OrchestrationRun, SubTask } from "@/lib/types";
+import type { OrchestrationEvent, OrchestrationRun, SubTask, Agent } from "@/lib/types";
 import { v4 as uuid } from "uuid";
 
 export const runtime = "nodejs";
@@ -17,7 +18,7 @@ function sse(event: OrchestrationEvent): string {
 
 export async function POST(req: Request) {
   ensureSeeded();
-  const { goal } = (await req.json()) as { goal?: string };
+  const { goal, team_id } = (await req.json()) as { goal?: string; team_id?: string };
   if (!goal) {
     return new Response(
       JSON.stringify({ success: false, error: { message: "goal required" } }),
@@ -32,7 +33,16 @@ export async function POST(req: Request) {
         controller.enqueue(enc.encode(sse(ev)));
 
       try {
-        const agents = listAgents();
+        let agentPool: Agent[];
+        if (team_id) {
+          const team = getTeam(team_id);
+          if (!team) throw new Error(`team ${team_id} not found`);
+          agentPool = teamMembers(team);
+          if (agentPool.length === 0) throw new Error(`team ${team_id} has no members`);
+        } else {
+          agentPool = listAgents();
+        }
+
         const run: OrchestrationRun = {
           id: uuid(),
           goal,
@@ -73,7 +83,7 @@ export async function POST(req: Request) {
             model: st.model,
           });
 
-          const agent = selectAgent(agents, st.tier, decomposed[i].skill_hint);
+          const agent = selectAgent(agentPool, st.tier, decomposed[i].skill_hint);
           st.agent_id = agent.id;
           send({ type: "agent_assigned", subtask_id: st.id, agent_id: agent.id });
         }
@@ -82,7 +92,7 @@ export async function POST(req: Request) {
           subtasks.map(async (st) => {
             send({ type: "task_started", subtask_id: st.id });
             st.status = "working";
-            const agent = agents.find((a) => a.id === st.agent_id);
+            const agent = agentPool.find((a) => a.id === st.agent_id);
             if (!agent) throw new Error(`agent ${st.agent_id} not found`);
             try {
               const result = await runSubagent(

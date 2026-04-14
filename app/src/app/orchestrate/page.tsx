@@ -1,32 +1,51 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 import { SavingsPanel } from "@/components/SavingsPanel";
 import { TaskRow } from "@/components/TaskRow";
 import { TeamHeader } from "@/components/TeamHeader";
-import type { Agent, OrchestrationEvent, SubTask } from "@/lib/types";
+import type { Agent, OrchestrationEvent, SubTask, Team } from "@/lib/types";
 
 const DEFAULT_GOAL =
   "Launch a new SaaS product: design the pricing tier architecture, write the landing page headline and hero copy, and format a 5-question FAQ section from these raw notes: 'How much? Monthly. Cancel anytime. Who owns data? Customer does. Refunds? 30-day. Enterprise? Yes.'";
 
-export default function OrchestratePage() {
+interface TeamDetailResponse {
+  team: Team;
+  members: Agent[];
+}
+
+function OrchestrateInner() {
+  const params = useSearchParams();
+  const teamId = params.get("team");
+
   const [goal, setGoal] = useState(DEFAULT_GOAL);
   const [subtasks, setSubtasks] = useState<SubTask[]>([]);
   const [agents, setAgents] = useState<Agent[]>([]);
+  const [team, setTeam] = useState<Team | null>(null);
   const [running, setRunning] = useState(false);
   const [finished, setFinished] = useState(false);
-  const [totals, setTotals] = useState({
-    naive: 0,
-    actual: 0,
-    savedPct: 0,
-  });
+  const [totals, setTotals] = useState({ naive: 0, actual: 0, savedPct: 0 });
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch("/api/agents")
-      .then((r) => r.json())
-      .then((j) => setAgents(j.data ?? []));
-  }, []);
+    if (teamId) {
+      fetch(`/api/teams/${teamId}`)
+        .then((r) => r.json())
+        .then((j) => {
+          if (j.success) {
+            const data = j.data as TeamDetailResponse;
+            setTeam(data.team);
+            setAgents(data.members);
+          }
+        });
+    } else {
+      fetch("/api/agents")
+        .then((r) => r.json())
+        .then((j) => setAgents(j.data ?? []));
+    }
+  }, [teamId]);
 
   const agentsById = useMemo(
     () => new Map(agents.map((a) => [a.id, a])),
@@ -43,7 +62,7 @@ export default function OrchestratePage() {
     const res = await fetch("/api/orchestrate", {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ goal }),
+      body: JSON.stringify({ goal, team_id: teamId ?? undefined }),
     });
     if (!res.ok || !res.body) {
       setError("orchestrate request failed");
@@ -88,9 +107,30 @@ export default function OrchestratePage() {
         <p className="text-[var(--text-dim)] max-w-2xl">
           Give the orchestrator a goal. It will decompose it into subtasks,
           classify each by complexity, route to the cheapest Claude model that
-          can do it well, and hire an agent from the marketplace.
+          can do it well, and hire an agent from the pool.
         </p>
       </header>
+
+      {team && (
+        <div className="card p-4 flex items-center gap-4 border-[var(--accent)]">
+          <div className="text-3xl">{team.cover_emoji}</div>
+          <div className="flex-1 min-w-0">
+            <div className="text-xs uppercase tracking-wider text-[var(--accent)]">
+              Team rented
+            </div>
+            <div className="font-semibold truncate">{team.name}</div>
+            <div className="text-xs text-[var(--text-dim)]">
+              {agents.length} agents · avg {team.avg_savings_pct.toFixed(1)}% savings on past runs
+            </div>
+          </div>
+          <Link
+            href={`/teams/${team.id}`}
+            className="text-xs text-[var(--text-dim)] hover:text-white"
+          >
+            view team →
+          </Link>
+        </div>
+      )}
 
       <div className="card p-4 flex flex-col gap-3">
         <textarea
@@ -106,7 +146,7 @@ export default function OrchestratePage() {
             disabled={running || !goal.trim()}
             className="bg-[var(--accent)] hover:opacity-90 disabled:opacity-40 px-5 py-2 rounded text-sm font-semibold"
           >
-            {running ? "Running..." : "Run orchestrator"}
+            {running ? "Running..." : team ? `Dispatch ${team.name}` : "Run orchestrator"}
           </button>
           {error && <div className="text-sm text-red-400">{error}</div>}
         </div>
@@ -177,4 +217,12 @@ function applyEvent(prev: SubTask[], ev: OrchestrationEvent): SubTask[] {
     default:
       return prev;
   }
+}
+
+export default function OrchestratePage() {
+  return (
+    <Suspense fallback={<div className="text-sm text-[var(--text-dim)]">Loading...</div>}>
+      <OrchestrateInner />
+    </Suspense>
+  );
 }
