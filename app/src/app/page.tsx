@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { TeamCard } from "@/components/TeamCard";
 import { AgentCard } from "@/components/AgentCard";
+import { TeamNavigator } from "@/components/TeamNavigator";
+import { RecentRunsPanel } from "@/components/RecentRunsPanel";
 import { ensureSeeded } from "@/lib/seed";
 import { listTeams } from "@/lib/teams";
-import { listAgents } from "@/lib/store";
+import { listAgents, listRuns } from "@/lib/store";
 
 export const dynamic = "force-dynamic";
 
@@ -11,6 +13,7 @@ export default function MarketplacePage() {
   ensureSeeded();
   const teams = listTeams();
   const agents = listAgents();
+  const runs = listRuns();
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "64px" }}>
 
@@ -115,6 +118,18 @@ export default function MarketplacePage() {
           ))}
         </div>
       </section>
+
+      {/* ── Divider ──────────────────────────────────── */}
+      <div style={{ height: "1px", background: "linear-gradient(to right, transparent, var(--border) 20%, var(--border) 80%, transparent)" }} />
+
+      {/* ── Team Navigator ───────────────────────────── */}
+      <TeamNavigator teams={teams} />
+
+      {/* ── Divider ──────────────────────────────────── */}
+      <div style={{ height: "1px", background: "linear-gradient(to right, transparent, var(--border) 20%, var(--border) 80%, transparent)" }} />
+
+      {/* ── Recent Runs ──────────────────────────────── */}
+      <RecentRunsPanel runs={runs} />
 
       {/* ── Divider ──────────────────────────────────── */}
       <div style={{ height: "1px", background: "linear-gradient(to right, transparent, var(--border) 20%, var(--border) 80%, transparent)" }} />

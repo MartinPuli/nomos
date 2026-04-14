@@ -14,21 +14,21 @@ const RECOMMENDATIONS: NavigatorRecommendation[] = [
     description: "Landing hero, FAQ, SEO brief, and social copy in one coordinated run.",
     prompt:
       "Launch a new SaaS product: design the pricing tier architecture, write the landing page headline and hero copy, and format a 5-question FAQ section from these raw notes: 'How much? Monthly. Cancel anytime. Who owns data? Customer does. Refunds? 30-day. Enterprise? Yes.'",
-    teamId: "product-launch-squad",
+    teamId: "content-engine",
   },
   {
     title: "Stress-test product strategy",
     description: "Architecture, packaging, and founder narrative for a technical product decision.",
     prompt:
       "Evaluate a B2B analytics platform: analyze the ingestion architecture, propose a pricing and packaging model, and rewrite the customer-facing summary for the launch memo.",
-    teamId: "saas-architecture-squad",
+    teamId: "market-research",
   },
   {
     title: "Scale content operations",
     description: "Translations, summaries, and structured FAQ output on the cheapest viable path.",
     prompt:
       "Turn these product notes into a multilingual FAQ, summarize the support issues into 5 bullet insights, and draft a short launch thread for social channels.",
-    teamId: "content-pipeline-squad",
+    teamId: "localization-studio",
   },
 ];
 

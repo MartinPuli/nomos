@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { ensureSeeded } from "@/lib/seed";
-import { getTeam, teamMembers } from "@/lib/teams";
+import { getTeam, getTeamBySlug, teamMembers } from "@/lib/teams";
 
 export async function GET(
   _req: Request,
@@ -8,7 +8,7 @@ export async function GET(
 ) {
   ensureSeeded();
   const { id } = await params;
-  const team = getTeam(id);
+  const team = getTeam(id) ?? getTeamBySlug(id);
   if (!team) {
     return NextResponse.json(
       { success: false, error: { message: "team not found" } },

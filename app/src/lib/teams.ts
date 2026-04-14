@@ -20,6 +20,15 @@ export function getTeam(id: string): Team | undefined {
   return store.teams?.get(id);
 }
 
+export function getTeamBySlug(slug: string): Team | undefined {
+  const store = getStore() as unknown as { teams?: Map<string, Team> };
+  if (!store.teams) return undefined;
+  for (const team of store.teams.values()) {
+    if (team.slug === slug) return team;
+  }
+  return undefined;
+}
+
 export function teamMembers(team: Team): Agent[] {
   return team.member_ids
     .map((id) => getAgent(id))
