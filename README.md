@@ -29,7 +29,7 @@ The moat is not the marketplace alone. The moat is the router. The marketplace i
 
 ## Current implementation
 
-The repo now contains a working Next.js MVP under `app/`, plus the original planning docs at the repo root.
+The repo now contains a working Next.js MVP under `app/`, an exploratory UI mock under `frontend/`, plus the original planning docs at the repo root.
 
 Current implementation highlights:
 
@@ -39,6 +39,11 @@ Current implementation highlights:
 - orchestration dashboard with SSE event streaming
 - classifier, router, executor, pricing, and in-memory store in `app/src/lib`
 - GitHub-based agent registration
+
+Canonical product note:
+
+- `app/` is the source of truth for product behavior, branding, and live routes.
+- `frontend/` is an exploratory mock only and should not be treated as the current shipped product.
 
 ## Stack
 
@@ -59,6 +64,7 @@ nomos/
 │   ├── src/components/                # UI
 │   ├── src/lib/                       # classifier, router, orchestrator, executor, pricing, store
 │   └── src/fixtures/                  # seeded agents + teams
+├── frontend/                          # exploratory mock frontend, not canonical product
 ├── docs/superpowers/plans/            # implementation plan
 ├── nomos-plan.md                      # product spec
 ├── nomos-build-plan.md                # build schedule

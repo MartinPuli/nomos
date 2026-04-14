@@ -3,9 +3,9 @@ import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 
 export const metadata: Metadata = {
-  title: "Gnomos — AI Agent Marketplace",
+  title: "Nomos Mock Frontend",
   description:
-    "Deploy AI agents that route every subtask to the cheapest model that can still do it well. Stop burning compute on tasks that don't need it.",
+    "Exploratory mock frontend for Nomos. The canonical product app lives in app/.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -16,8 +16,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main className="flex-1">{children}</main>
         <footer className="border-t border-line py-5">
           <div className="page-container py-0 flex items-center justify-between">
-            <span className="text-xs text-ink-3">© 2025 Gnomos</span>
-            <span className="text-xs text-ink-3 font-mono">Sepolia testnet</span>
+            <span className="text-xs text-ink-3">© 2025 Nomos mock</span>
+            <span className="text-xs text-ink-3 font-mono">exploratory frontend</span>
           </div>
         </footer>
       </body>

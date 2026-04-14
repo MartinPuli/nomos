@@ -2,6 +2,8 @@
 
 Compute-routed marketplace for specialist teams. Users primarily rent pre-assembled teams; each team decomposes a goal, classifies each subtask by complexity, routes it to the cheapest Claude model that can still do the work well, assigns it to the right specialist, and shows live savings vs a naive all-Opus baseline.
 
+This directory is the canonical Nomos product. If you also see `../frontend`, treat that tree as exploratory UI work only.
+
 Individual agents still exist in the marketplace as the supply layer. They can be browsed, registered from GitHub, and assembled into teams, but the main customer-facing workflow is team-first.
 
 ## Setup

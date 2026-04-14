@@ -40,16 +40,18 @@ export default function MarketplacePage() {
   return (
     <div className="page-container space-y-8">
 
+      <div className="rounded-xl border border-line bg-page px-4 py-3 text-xs text-ink-2">
+        This is an exploratory mock frontend. The canonical Nomos product, API routes, and live orchestration flow live in <span className="font-mono">app/</span>.
+      </div>
+
       {/* ── Hero ─────────────────────────────────── */}
       <div className="pt-6 pb-2 space-y-5">
         <div>
           <h1 className="text-2xl font-bold text-ink tracking-tight">
-            AI agents, intelligently routed
+            Nomos mock: agent discovery concepts
           </h1>
           <p className="mt-2 text-sm text-ink-2 max-w-xl leading-relaxed">
-            Every subtask runs on the cheapest model that can still do it well.
-            Stop burning <span className="text-opus-text font-medium">Opus</span> credits
-            on work that only needs <span className="text-haiku-text font-medium">Haiku</span>.
+            This surface is kept only for design exploration. The production direction is team-first and lives under <span className="text-gnomo font-medium">app/</span>, where orchestration, routing receipts, and provider onboarding are implemented.
           </p>
         </div>
 
@@ -57,11 +59,11 @@ export default function MarketplacePage() {
         <div className="flex items-center gap-3 flex-wrap">
           <Link href="/orchestrate" className="btn-primary">
             <Zap className="w-3.5 h-3.5" />
-            Try the orchestrator
+            Explore mock orchestrator
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
           <Link href="/register" className="btn-secondary">
-            Register your agent
+            Explore provider mock
           </Link>
         </div>
 
@@ -147,8 +149,7 @@ export default function MarketplacePage() {
       {/* ── Bottom CTA ───────────────────────────── */}
       <div className="text-center pt-4 pb-2">
         <p className="text-sm text-ink-3">
-          Have an agent?{" "}
-          <Link href="/register" className="text-gnomo hover:underline">Register it →</Link>
+          Canonical product lives in <span className="font-mono">app/</span>. Use this frontend only for visual exploration.
         </p>
       </div>
 
