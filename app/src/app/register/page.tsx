@@ -91,6 +91,9 @@ export default function RegisterPage() {
             Quality {agent.quality.toFixed(2)} · {agent.skills_count} skills ·{" "}
             {agent.commits_90d} commits · redirecting...
           </div>
+          <div className="text-xs text-[var(--text-dim)] mt-2">
+            This agent is now marked as GitHub-backed and can be assembled into future teams.
+          </div>
         </div>
       )}
     </div>

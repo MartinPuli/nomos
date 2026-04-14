@@ -16,7 +16,7 @@ export function ensureSeeded(): void {
       raw.commits_90d,
       raw.metrics.success_rate,
     );
-    upsertAgent({ ...raw, quality });
+    upsertAgent({ ...raw, source: raw.source ?? "fixture", quality });
   }
   for (const team of teamsFixture as Team[]) {
     upsertTeam(team);

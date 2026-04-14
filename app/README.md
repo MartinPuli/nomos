@@ -14,6 +14,18 @@ pnpm dev
 
 Open http://localhost:3000.
 
+## Verification
+
+```bash
+npm.cmd test
+```
+
+This runs the Vitest suite covering pricing, routing, and GitHub registration helpers.
+
+## Demo ops
+
+See `../docs/demo-checklist.md` for a concise runbook and fallback path for live demos.
+
 ## Environment
 
 - `ANTHROPIC_API_KEY` is required for classify, orchestrate, and subagent execution.
@@ -59,6 +71,7 @@ Error shape for JSON routes:
 - Agents are the underlying specialists teams are built from.
 - Routing is the core product behavior that determines cost efficiency.
 - Registration currently onboards agents, not whole teams.
+- Agents can now be visually distinguished as fixture-backed or GitHub-backed in the marketplace and detail views.
 
 ## Demo goal
 

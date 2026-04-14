@@ -5,6 +5,7 @@ import { TierBadge } from "./TierBadge";
 export function AgentCard({ agent }: { agent: Agent }) {
   const moderateAvg =
     agent.metrics.avg_tokens_per_task[agent.default_tier] ?? 1000;
+  const sourceLabel = agent.source === "github" ? "GitHub" : "Fixture";
   return (
     <Link
       href={`/agents/${agent.id}`}
@@ -15,7 +16,12 @@ export function AgentCard({ agent }: { agent: Agent }) {
           <div className="font-semibold">{agent.name}</div>
           <div className="text-xs text-[var(--text-dim)]">{agent.handle}</div>
         </div>
-        <TierBadge tier={agent.default_tier} />
+        <div className="flex flex-col items-end gap-2">
+          <TierBadge tier={agent.default_tier} />
+          <span className="text-[10px] uppercase tracking-wider text-[var(--text-dim)]">
+            {sourceLabel}
+          </span>
+        </div>
       </div>
       <p className="text-sm text-[var(--text-dim)] line-clamp-2">
         {agent.description}

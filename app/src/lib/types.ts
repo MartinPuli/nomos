@@ -13,6 +13,7 @@ export interface Agent {
   name: string;
   handle: string;
   description: string;
+  source?: "fixture" | "github";
   skills: string[];
   default_tier: Tier;
   github_url?: string;

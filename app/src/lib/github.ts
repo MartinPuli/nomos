@@ -169,6 +169,7 @@ export async function registerFromGithub(url: string): Promise<Agent> {
     name: repo.replace(/[-_]/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()),
     handle: `@${owner}/${repo}`,
     description: `Registered from github.com/${owner}/${repo}`,
+    source: "github",
     skills,
     default_tier: "moderate",
     github_url: `https://github.com/${owner}/${repo}`,

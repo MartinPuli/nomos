@@ -48,8 +48,13 @@ export function TaskRow({
         </div>
       </div>
       {task.classification && (
-        <div className="text-xs text-[var(--text-dim)] italic">
-          Classifier: {task.classification.reason}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-[var(--text-dim)] italic">
+          <div>
+            Classifier: {task.classification.reason}
+          </div>
+          <div className="md:text-right">
+            Est. tokens {task.classification.estimated_tokens.toLocaleString()} · tier {task.classification.tier}
+          </div>
         </div>
       )}
       {task.status === "done" && (

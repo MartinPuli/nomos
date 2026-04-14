@@ -21,7 +21,7 @@ export default function MarketplacePage() {
           Rent specialist teams that route work to the cheapest model that fits.
         </h1>
         <p className="text-[var(--text-dim)] max-w-2xl">
-          AgentMarket is a compute-routed marketplace. The primary unit you rent is a team:
+          Nomos is a compute-routed marketplace. The primary unit you rent is a team:
           a curated squad of specialist agents with a shared mission. Give a team a goal and its
           internal orchestrator decomposes the work, classifies each subtask, and routes it to the
           cheapest Claude model that can still do it well. Individual agents still exist as the raw

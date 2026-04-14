@@ -11,6 +11,23 @@ import type { Agent, OrchestrationEvent, SubTask, Team } from "@/lib/types";
 const DEFAULT_GOAL =
   "Launch a new SaaS product: design the pricing tier architecture, write the landing page headline and hero copy, and format a 5-question FAQ section from these raw notes: 'How much? Monthly. Cancel anytime. Who owns data? Customer does. Refunds? 30-day. Enterprise? Yes.'";
 
+const DEMO_PRESETS = [
+  {
+    label: "Launch demo",
+    value: DEFAULT_GOAL,
+  },
+  {
+    label: "Architecture memo",
+    value:
+      "Evaluate a B2B analytics platform: analyze the ingestion architecture, propose a pricing and packaging model, and rewrite the customer-facing summary for the launch memo.",
+  },
+  {
+    label: "Content ops",
+    value:
+      "Turn these product notes into a multilingual FAQ, summarize the support issues into 5 bullet insights, and draft a short launch thread for social channels.",
+  },
+];
+
 interface TeamDetailResponse {
   team: Team;
   members: Agent[];
@@ -133,6 +150,34 @@ function OrchestrateInner() {
         </p>
       </header>
 
+      <div className="card p-4 flex flex-col gap-3">
+        <div className="flex items-center justify-between gap-4 flex-wrap">
+          <div>
+            <div className="text-xs uppercase tracking-wider text-[var(--accent)]">
+              Demo presets
+            </div>
+            <div className="text-sm text-[var(--text-dim)]">
+              Use a mixed-complexity goal to make routing and savings obvious on screen.
+            </div>
+          </div>
+          <div className="flex gap-2 flex-wrap">
+            {DEMO_PRESETS.map((preset) => (
+              <button
+                key={preset.label}
+                type="button"
+                onClick={() => setGoal(preset.value)}
+                className="px-3 py-1.5 rounded border border-[var(--border)] bg-[var(--bg-elev2)] text-xs hover:border-[var(--accent)] hover:text-white"
+              >
+                {preset.label}
+              </button>
+            ))}
+          </div>
+        </div>
+        <div className="text-xs text-[var(--text-dim)]">
+          Strongest live path: run a selected team and use the launch preset so Nomos shows Opus, Sonnet, and Haiku in one pass.
+        </div>
+      </div>
+
       {team && (
         <div className="card p-4 flex items-center gap-4 border-[var(--accent)]">
           <div className="text-3xl">{team.cover_emoji}</div>
@@ -172,6 +217,11 @@ function OrchestrateInner() {
           </button>
           {error && <div className="text-sm text-red-400">{error}</div>}
         </div>
+        {!team && (
+          <div className="text-xs text-[var(--text-dim)]">
+            Marketplace mode can hire from the full pool, but the clearest demo path starts from a specific team page.
+          </div>
+        )}
       </div>
 
       {subtasks.length > 0 && (

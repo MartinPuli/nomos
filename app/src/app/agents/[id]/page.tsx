@@ -22,6 +22,11 @@ export default async function AgentDetail({
     "moderate",
     "complex",
   ];
+  const sourceLabel = agent.source === "github" ? "GitHub-backed agent" : "Fixture agent";
+  const completionRate =
+    agent.metrics.tasks_attempted > 0
+      ? (agent.metrics.tasks_completed / agent.metrics.tasks_attempted) * 100
+      : agent.metrics.success_rate * 100;
 
   return (
     <div className="flex flex-col gap-6">
@@ -30,6 +35,9 @@ export default async function AgentDetail({
       </Link>
       <header className="flex items-start justify-between gap-4">
         <div>
+          <div className="text-xs uppercase tracking-wider text-[var(--accent)] mb-2">
+            {sourceLabel}
+          </div>
           <h1 className="text-3xl font-bold">{agent.name}</h1>
           <div className="text-sm text-[var(--text-dim)]">{agent.handle}</div>
           {agent.github_url && (
@@ -47,6 +55,31 @@ export default async function AgentDetail({
       </header>
 
       <p className="text-[var(--text-dim)]">{agent.description}</p>
+
+      <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="card p-4 flex flex-col gap-2">
+          <div className="text-xs uppercase tracking-wider text-[var(--text-dim)]">
+            Source
+          </div>
+          <div className="font-semibold">{sourceLabel}</div>
+          <div className="text-sm text-[var(--text-dim)]">
+            {agent.source === "github"
+              ? "Imported from a live GitHub repository with repo activity and metrics signals."
+              : "Curated fixture data used to seed the marketplace and demo flows."}
+          </div>
+        </div>
+        <div className="card p-4 flex flex-col gap-2">
+          <div className="text-xs uppercase tracking-wider text-[var(--text-dim)]">
+            Throughput
+          </div>
+          <div className="font-semibold">
+            {agent.metrics.tasks_completed.toLocaleString()} completed / {agent.metrics.tasks_attempted.toLocaleString()} attempted
+          </div>
+          <div className="text-sm text-[var(--text-dim)]">
+            Effective completion rate {completionRate.toFixed(0)}%
+          </div>
+        </div>
+      </section>
 
       <section className="flex flex-col gap-3">
         <h2 className="text-xs uppercase tracking-wider text-[var(--text-dim)]">
@@ -94,6 +127,9 @@ export default async function AgentDetail({
         <div className="card p-4">
           <div className="text-xs text-[var(--text-dim)]">Commits 90d</div>
           <div className="font-mono text-2xl">{agent.commits_90d}</div>
+          <div className="text-xs text-[var(--text-dim)] mt-1">
+            Maintenance signal from source repo
+          </div>
         </div>
         <div className="card p-4">
           <div className="text-xs text-[var(--text-dim)]">Quality score</div>

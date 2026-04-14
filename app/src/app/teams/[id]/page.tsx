@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { AgentCard } from "@/components/AgentCard";
 import { ensureSeeded } from "@/lib/seed";
-import { getTeam, teamMembers } from "@/lib/teams";
+import { getTeam, teamAverageSuccessRate, teamGithubBackedCount, teamMembers, teamTierMix } from "@/lib/teams";
 
 export const dynamic = "force-dynamic";
 
@@ -16,6 +16,9 @@ export default async function TeamDetail({
   const team = getTeam(id);
   if (!team) notFound();
   const members = teamMembers(team);
+  const tierMix = teamTierMix(team);
+  const avgSuccess = teamAverageSuccessRate(team);
+  const githubBacked = teamGithubBackedCount(team);
 
   return (
     <div className="flex flex-col gap-8">
@@ -74,6 +77,32 @@ export default async function TeamDetail({
           <div className="text-[10px] uppercase text-[var(--text-dim)]">Tasks completed</div>
           <div className="font-mono text-3xl font-bold">
             {team.tasks_completed.toLocaleString()}
+          </div>
+        </div>
+      </section>
+
+      <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="card p-4 flex flex-col gap-2">
+          <div className="text-[10px] uppercase text-[var(--text-dim)]">Model mix</div>
+          <div className="text-sm text-[var(--text-dim)]">
+            {tierMix.simple} simple · {tierMix.moderate} moderate · {tierMix.complex} complex
+          </div>
+          <div className="text-xs text-[var(--text-dim)]">
+            Shows whether this squad can cover cheap formatting work, balanced writing, and deep reasoning.
+          </div>
+        </div>
+        <div className="card p-4 flex flex-col gap-2">
+          <div className="text-[10px] uppercase text-[var(--text-dim)]">Member reliability</div>
+          <div className="font-mono text-2xl">{(avgSuccess * 100).toFixed(0)}%</div>
+          <div className="text-xs text-[var(--text-dim)]">
+            Average success rate across the team&rsquo;s specialists.
+          </div>
+        </div>
+        <div className="card p-4 flex flex-col gap-2">
+          <div className="text-[10px] uppercase text-[var(--text-dim)]">GitHub-backed members</div>
+          <div className="font-mono text-2xl">{githubBacked}/{members.length}</div>
+          <div className="text-xs text-[var(--text-dim)]">
+            Live-registered agents inside this team vs seeded fixtures.
           </div>
         </div>
       </section>
