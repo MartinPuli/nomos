@@ -12,8 +12,6 @@ import { listAgents, listRuns } from "@/lib/store";
 
 export const dynamic = "force-dynamic";
 
-const PARTNERS = ["kaszek"];
-
 export default function MarketplacePage() {
   ensureSeeded();
   const teams = listTeams();
@@ -125,37 +123,6 @@ export default function MarketplacePage() {
             margin: "0 auto",
           }}
         >
-          {/* Partner row */}
-          <div
-            className="hero-fade"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "28px",
-              flexWrap: "wrap",
-              justifyContent: "center",
-              marginBottom: "48px",
-              animationDelay: "60ms",
-            }}
-          >
-            {PARTNERS.map((p, i) => (
-              <div
-                key={p}
-                style={{ display: "flex", alignItems: "center", gap: "28px" }}
-              >
-                {i > 0 && (
-                  <span
-                    aria-hidden
-                    style={{ color: "var(--text-muted)", fontSize: "0.75rem" }}
-                  >
-                    ✦
-                  </span>
-                )}
-                <span className="caps-mark">{p}</span>
-              </div>
-            ))}
-          </div>
-
           {/* ( nomos ) wordmark */}
           <div
             style={{

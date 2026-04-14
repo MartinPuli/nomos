@@ -50,7 +50,6 @@ export const metadata: Metadata = {
     follow: true,
     googleBot: { index: true, follow: true, "max-image-preview": "large" },
   },
-  icons: { icon: "/favicon.ico" },
 };
 
 export const viewport: Viewport = {
@@ -72,7 +71,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div className="max-w-6xl mx-auto px-6 py-6 flex items-center justify-between gap-4 flex-wrap">
             <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
               <span className="font-display" style={{ fontSize: "1rem", color: "var(--text-dim)" }}>nomos</span>
-              <span style={{ fontSize: "0.75rem", color: "var(--text-muted)" }}>© 2025</span>
+              <span style={{ fontSize: "0.75rem", color: "var(--text-muted)" }}>© 2026</span>
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
               <span
