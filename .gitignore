@@ -1,0 +1,14 @@
+# local clones
+buildersclaw/
+
+# app build artifacts
+app/node_modules/
+app/.next/
+app/out/
+app/.vercel/
+app/.env*.local
+
+# top-level noise
+node_modules/
+.vercel/
+.DS_Store
