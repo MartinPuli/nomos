@@ -1,0 +1,146 @@
+[
+  {
+    "id": "copywriter-pro",
+    "name": "Copywriter Pro",
+    "handle": "@copywriter-pro",
+    "description": "Landing page and product copy. Brand voice adaptive.",
+    "skills": ["copywriting", "landing_pages", "cta_optimization", "brand_voice", "value_props"],
+    "default_tier": "moderate",
+    "github_url": "https://github.com/fixtures/copywriter-pro",
+    "metrics": {
+      "avg_tokens_per_task": { "simple": 320, "moderate": 1100, "complex": 2400 },
+      "tasks_completed": 94,
+      "tasks_attempted": 100,
+      "success_rate": 0.94
+    },
+    "skills_count": 5,
+    "commits_90d": 27,
+    "created_at": "2026-01-14T10:00:00Z"
+  },
+  {
+    "id": "seo-strategist",
+    "name": "SEO Strategist",
+    "handle": "@seo-strategist",
+    "description": "SEO briefs, keyword research, meta generation.",
+    "skills": ["seo", "keyword_research", "meta_tags", "content_strategy", "serp_analysis"],
+    "default_tier": "moderate",
+    "github_url": "https://github.com/fixtures/seo-strategist",
+    "metrics": {
+      "avg_tokens_per_task": { "simple": 280, "moderate": 1400, "complex": 2600 },
+      "tasks_completed": 88,
+      "tasks_attempted": 100,
+      "success_rate": 0.88
+    },
+    "skills_count": 5,
+    "commits_90d": 22,
+    "created_at": "2026-01-22T10:00:00Z"
+  },
+  {
+    "id": "pricing-architect",
+    "name": "Pricing Architect",
+    "handle": "@pricing-architect",
+    "description": "SaaS pricing design, tier modeling, unit economics.",
+    "skills": ["pricing", "saas_economics", "tier_design", "revenue_modeling", "competitive_analysis", "packaging_strategy"],
+    "default_tier": "complex",
+    "github_url": "https://github.com/fixtures/pricing-architect",
+    "metrics": {
+      "avg_tokens_per_task": { "simple": 400, "moderate": 1800, "complex": 3200 },
+      "tasks_completed": 91,
+      "tasks_attempted": 100,
+      "success_rate": 0.91
+    },
+    "skills_count": 6,
+    "commits_90d": 18,
+    "created_at": "2026-02-03T10:00:00Z"
+  },
+  {
+    "id": "faq-formatter",
+    "name": "FAQ Formatter",
+    "handle": "@faq-formatter",
+    "description": "Turns raw Q&A into clean, structured FAQ sections.",
+    "skills": ["formatting", "markdown", "structured_output"],
+    "default_tier": "simple",
+    "github_url": "https://github.com/fixtures/faq-formatter",
+    "metrics": {
+      "avg_tokens_per_task": { "simple": 340, "moderate": 900, "complex": 1800 },
+      "tasks_completed": 97,
+      "tasks_attempted": 100,
+      "success_rate": 0.97
+    },
+    "skills_count": 3,
+    "commits_90d": 14,
+    "created_at": "2026-02-10T10:00:00Z"
+  },
+  {
+    "id": "social-writer",
+    "name": "Social Writer",
+    "handle": "@social-writer",
+    "description": "Twitter threads, LinkedIn posts, viral hooks.",
+    "skills": ["twitter", "linkedin", "threads", "hooks", "social_copy"],
+    "default_tier": "moderate",
+    "github_url": "https://github.com/fixtures/social-writer",
+    "metrics": {
+      "avg_tokens_per_task": { "simple": 250, "moderate": 900, "complex": 1900 },
+      "tasks_completed": 85,
+      "tasks_attempted": 100,
+      "success_rate": 0.85
+    },
+    "skills_count": 5,
+    "commits_90d": 31,
+    "created_at": "2026-02-18T10:00:00Z"
+  },
+  {
+    "id": "tech-architect",
+    "name": "Tech Architect",
+    "handle": "@tech-architect",
+    "description": "System design, architecture decisions, scaling strategy.",
+    "skills": ["architecture", "system_design", "scalability", "databases", "api_design", "distributed_systems", "security"],
+    "default_tier": "complex",
+    "github_url": "https://github.com/fixtures/tech-architect",
+    "metrics": {
+      "avg_tokens_per_task": { "simple": 500, "moderate": 2000, "complex": 3800 },
+      "tasks_completed": 89,
+      "tasks_attempted": 100,
+      "success_rate": 0.89
+    },
+    "skills_count": 7,
+    "commits_90d": 24,
+    "created_at": "2026-02-25T10:00:00Z"
+  },
+  {
+    "id": "translator",
+    "name": "Translator",
+    "handle": "@translator",
+    "description": "Fast accurate translations. EN/ES/PT/FR/DE.",
+    "skills": ["translation", "localization", "language_detection"],
+    "default_tier": "simple",
+    "github_url": "https://github.com/fixtures/translator",
+    "metrics": {
+      "avg_tokens_per_task": { "simple": 220, "moderate": 700, "complex": 1500 },
+      "tasks_completed": 96,
+      "tasks_attempted": 100,
+      "success_rate": 0.96
+    },
+    "skills_count": 3,
+    "commits_90d": 12,
+    "created_at": "2026-03-04T10:00:00Z"
+  },
+  {
+    "id": "data-analyst",
+    "name": "Data Analyst",
+    "handle": "@data-analyst",
+    "description": "Summarizes, analyzes, charts raw data tables.",
+    "skills": ["data_analysis", "summarization", "statistics", "charting"],
+    "default_tier": "moderate",
+    "github_url": "https://github.com/fixtures/data-analyst",
+    "metrics": {
+      "avg_tokens_per_task": { "simple": 300, "moderate": 1300, "complex": 2700 },
+      "tasks_completed": 90,
+      "tasks_attempted": 100,
+      "success_rate": 0.90
+    },
+    "skills_count": 4,
+    "commits_90d": 19,
+    "created_at": "2026-03-11T10:00:00Z"
+  }
+]
