@@ -1,6 +1,6 @@
-# AgentMarket — 5-Hour Build Plan
+# Nomos — 5-Hour Build Plan
 
-> Execution plan for [agentmarket-plan.md](agentmarket-plan.md). Hour-by-hour, role-by-role, with concrete deliverables and cut lines.
+> Execution plan for [nomos-plan.md](nomos-plan.md). Hour-by-hour, role-by-role, with concrete deliverables and cut lines.
 
 ## Pre-flight (T-30 min, before clock starts)
 
@@ -8,7 +8,7 @@ Done before the timer:
 
 - [ ] **Roles assigned**: FS / BE / W3 / Product (1 person per role; if solo, see "Solo mode" at bottom).
 - [ ] **API keys ready**: `ANTHROPIC_API_KEY`, `GITHUB_TOKEN` (5K req/hr), Sepolia RPC URL (Alchemy/Infura), test wallet with Sepolia ETH (faucet → ≥0.1 ETH).
-- [ ] **Repo skeleton** pushed to a single `agentmarket/` GitHub repo with 4 folders: `frontend/`, `backend/`, `contracts/`, `fixtures/`.
+- [ ] **Repo skeleton** pushed to a single `nomos/` GitHub repo with 4 folders: `frontend/`, `backend/`, `contracts/`, `fixtures/`.
 - [ ] **Reusable code scan**: skim `buildersclaw/` (already cloned) — `buildersclaw-app` (FE patterns), `buildersclaw-agent` (Claude orchestration), `buildersclaw-contracts` (escrow Solidity). **Lift, don't fork**.
 - [ ] **Demo goal locked**: *"Launch a new SaaS product — design the pricing architecture, write the landing page, and format the FAQ."*
 - [ ] **Slack/Discord channel** open for the team. Shared Notion or pinned chat for fixtures URLs + escrow address.
@@ -138,7 +138,7 @@ Goal at end of hour 4: the 2-min demo runs cleanly twice in a row.
 ## File / repo structure
 
 ```
-agentmarket/
+nomos/
 ├── frontend/                  # Next.js 14
 │   ├── app/
 │   │   ├── page.tsx           # Marketplace feed

@@ -1,11 +1,11 @@
-# AgentMarket — Hackathon Plan (Compute-Optimized Edition)
+# Nomos — Hackathon Plan (Compute-Optimized Edition)
 
 > Optimized for a 5-hour build window.
 > **v2 pivot:** mentor feedback reframes the product from "rent idle agent capacity" → **"intelligent compute routing"**. The orchestrator doesn't just pick agents — it picks the cheapest model tier (Haiku / Sonnet / Opus) that can still do each subtask well.
 
 ## 1. Product Vision
 
-AgentMarket is an autonomous agent marketplace with a built-in **compute routing engine** — the layer that decides not just *which agent* to hire, but *which model* to run it on, at the lowest cost that still meets quality requirements.
+Nomos is an autonomous agent marketplace with a built-in **compute routing engine** — the layer that decides not just *which agent* to hire, but *which model* to run it on, at the lowest cost that still meets quality requirements.
 
 An orchestrator receives a goal, decomposes it into subtasks, classifies each by complexity, and routes each to the right model tier:
 
@@ -14,12 +14,12 @@ An orchestrator receives a goal, decomposes it into subtasks, classifies each by
 
 The marketplace settles payments in ETH, and the pricing engine makes every token count.
 
-> For teams building multi-agent workflows, AgentMarket is the difference between burning **$40 in API credits** and spending **$1.20** for the same result.
+> For teams building multi-agent workflows, Nomos is the difference between burning **$40 in API credits** and spending **$1.20** for the same result.
 
 ## 2. Market Positioning
 
 **Defensible position (one sentence):**
-> AgentMarket is the only agent marketplace with a native compute routing layer — every subtask gets the cheapest model that can do it well, and the savings are shown live.
+> Nomos is the only agent marketplace with a native compute routing layer — every subtask gets the cheapest model that can do it well, and the savings are shown live.
 
 **Why this angle wins over the v1 pitch:**
 
@@ -142,7 +142,7 @@ Subtask: {subtask_description}
 
 ### Token efficiency as agent reputation
 
-Each registered agent stores a rolling `avg_tokens_per_task` **per tier** in `memory/metrics.json` on their GitHub repo. An agent averaging 800 tokens for moderate tasks beats one averaging 1,800 — same quality, less spend. This is the central number that ranks the marketplace feed and makes AgentMarket different from a model-provider list.
+Each registered agent stores a rolling `avg_tokens_per_task` **per tier** in `memory/metrics.json` on their GitHub repo. An agent averaging 800 tokens for moderate tasks beats one averaging 1,800 — same quality, less spend. This is the central number that ranks the marketplace feed and makes Nomos different from a model-provider list.
 
 ### Naive vs routed cost — the demo number
 
@@ -160,13 +160,13 @@ def compute_savings(tasks):
 
 ### [0:00–0:15] — The problem, reframed around cost
 
-> "If you're building with AI agents today, every task runs on the same model — usually the most powerful one. That's like hiring a senior engineer to sort your inbox. The work gets done, but you're burning money on compute you don't need. AgentMarket fixes that."
+> "If you're building with AI agents today, every task runs on the same model — usually the most powerful one. That's like hiring a senior engineer to sort your inbox. The work gets done, but you're burning money on compute you don't need. Nomos fixes that."
 
 ### [0:15–0:35] — Marketplace with model-tier framing
 
 *[Screen: Marketplace feed — agent cards each showing a **model tier badge** (Haiku / Sonnet / Opus) and a token efficiency score]*
 
-> "This is AgentMarket. Each agent advertises what they're optimized for, what model tier they run on, and how token-efficient they are. This copywriting agent averages 1,100 tokens per task on Sonnet. This formatter runs on Haiku — 340 tokens, finished in a second. The marketplace knows the difference."
+> "This is Nomos. Each agent advertises what they're optimized for, what model tier they run on, and how token-efficient they are. This copywriting agent averages 1,100 tokens per task on Sonnet. This formatter runs on Haiku — 340 tokens, finished in a second. The marketplace knows the difference."
 
 ### [0:35–1:15] — Live orchestration with routing visible
 
@@ -188,17 +188,17 @@ def compute_savings(tasks):
 > "Simple formatting. Haiku — a fraction of the cost."
 
 *[Tasks complete, cost panel updates]*
-> "If this had all run on Opus, you'd have spent **0.0043 ETH**. AgentMarket spent **0.0012 ETH**. That's **72% cheaper** — for the exact same output. Payment settled to each agent wallet automatically. Tx hash live on testnet."
+> "If this had all run on Opus, you'd have spent **0.0043 ETH**. Nomos spent **0.0012 ETH**. That's **72% cheaper** — for the exact same output. Payment settled to each agent wallet automatically. Tx hash live on testnet."
 
 ### [1:15–1:35] — Why this is hard to replicate
 
-> "Every framework today lets you define agents. None of them automatically decides which model each task deserves. That routing intelligence — knowing that formatting is Haiku work and architecture is Opus work — is what AgentMarket contributes. And because it's a marketplace, agents compete on **token efficiency**. The best agents are the ones who do the most with the least compute."
+> "Every framework today lets you define agents. None of them automatically decides which model each task deserves. That routing intelligence — knowing that formatting is Haiku work and architecture is Opus work — is what Nomos contributes. And because it's a marketplace, agents compete on **token efficiency**. The best agents are the ones who do the most with the least compute."
 
 ### [1:35–2:00] — Vision close
 
 > "As agent workflows get more complex — dozens of subtasks, hundreds of calls — the cost difference compounds. A startup running 10,000 agent tasks a day saves **$30K a month** just by routing intelligently. That's not a feature. That's a business model."
 >
-> "AgentMarket is the infrastructure layer that makes agent economies economically viable. Not just smarter — **cheaper**."
+> "Nomos is the infrastructure layer that makes agent economies economically viable. Not just smarter — **cheaper**."
 
 ## 8. Risks & Mitigations
 
@@ -217,10 +217,10 @@ The product at 12 months is a **compute routing layer**, not just a marketplace.
 
 ### Developer integration — single SDK call
 
-Any developer building a multi-agent pipeline integrates AgentMarket's router via one call:
+Any developer building a multi-agent pipeline integrates Nomos's router via one call:
 
 ```python
-from agentmarket import route
+from nomos import route
 
 result = route(
     task="Write a technical specification for the auth service",
@@ -234,7 +234,7 @@ The router handles classification, model selection, agent hiring, execution, and
 
 ### Revenue model at scale
 
-**3% protocol fee** on all compute routed through AgentMarket. At **$1M/day** in routed API spend (plausible with ~500 enterprise teams), that's **$30K/day** in protocol revenue.
+**3% protocol fee** on all compute routed through Nomos. At **$1M/day** in routed API spend (plausible with ~500 enterprise teams), that's **$30K/day** in protocol revenue.
 
 The marketplace network effect compounds:
 > more agents → better routing options → lower costs for orchestrators → more orchestrators → more demand for agents
@@ -245,4 +245,4 @@ Launch with the developer community from this hackathon. First 100 users come fr
 
 ### 12-month north star
 
-AgentMarket processes more routed AI compute than any single company's internal infrastructure — because no single company can build a marketplace of specialized, efficiency-scored agents. **That's the moat.**
+Nomos processes more routed AI compute than any single company's internal infrastructure — because no single company can build a marketplace of specialized, efficiency-scored agents. **That's the moat.**

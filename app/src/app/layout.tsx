@@ -3,7 +3,7 @@ import "./globals.css";
 import { Nav } from "@/components/Nav";
 
 export const metadata: Metadata = {
-  title: "AgentMarket — Compute-Routed Agent Marketplace",
+  title: "Nomos — Rent-a-Team Agent Marketplace",
   description:
     "Orchestrators that decompose goals, classify complexity, and route each subtask to the cheapest Claude model that can do it well.",
 };

@@ -1,8 +1,8 @@
-# AgentMarket Core Implementation Plan
+# Nomos Core Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Build the core AgentMarket product in 4.5 hours — a Next.js app where an orchestrator decomposes a goal into subtasks, classifies each by complexity (Haiku), routes each to the cheapest Claude model that can do it well (Haiku / Sonnet / Opus), and shows live compute-cost savings vs a naive all-Opus baseline. No Web3, no payments, no auth — pure cognitive routing demo.
+**Goal:** Build the core Nomos product in 4.5 hours — a Next.js app where an orchestrator decomposes a goal into subtasks, classifies each by complexity (Haiku), routes each to the cheapest Claude model that can do it well (Haiku / Sonnet / Opus), and shows live compute-cost savings vs a naive all-Opus baseline. No Web3, no payments, no auth — pure cognitive routing demo.
 
 **Architecture:** Next.js 16 full-stack. App Router pages for Marketplace, Orchestration Dashboard, Agent Detail, and GitHub Registration. API routes handle classification, orchestration (SSE streaming), and registration. Core logic lives in `src/lib/`: classifier (Haiku JSON), router (tier→model map), orchestrator (Sonnet `tool_use` decomposition), executor (parallel subagent calls), pricing (model rates + savings calc), in-memory store for agents. 8 pre-seeded fixture agents cover all three tiers. Optional live GitHub registration fetches `skills.md` + `memory/metrics.json` and falls back to defaults. All state is in-memory singleton (no DB, acceptable for demo + serverless-reset resilience via re-seeding on cold start).
 
@@ -426,17 +426,17 @@ type Store = {
   seeded: boolean;
 };
 
-const g = globalThis as unknown as { __agentmarket_store?: Store };
+const g = globalThis as unknown as { __nomos_store?: Store };
 
 export function getStore(): Store {
-  if (!g.__agentmarket_store) {
-    g.__agentmarket_store = {
+  if (!g.__nomos_store) {
+    g.__nomos_store = {
       agents: new Map(),
       runs: new Map(),
       seeded: false,
     };
   }
-  return g.__agentmarket_store;
+  return g.__nomos_store;
 }
 
 export function upsertAgent(agent: Agent): Agent {
@@ -1295,7 +1295,7 @@ export function Nav() {
   return (
     <nav className="border-b border-[var(--border)] px-6 py-4 flex items-center gap-6">
       <Link href="/" className="font-bold text-lg tracking-tight">
-        ⟐ <span className="text-[var(--accent)]">AgentMarket</span>
+        ⟐ <span className="text-[var(--accent)]">Nomos</span>
       </Link>
       <div className="flex gap-5 text-sm text-[var(--text-dim)]">
         <Link href="/" className="hover:text-white">Marketplace</Link>
@@ -1318,7 +1318,7 @@ import "./globals.css";
 import { Nav } from "@/components/Nav";
 
 export const metadata: Metadata = {
-  title: "AgentMarket — Compute-Routed Agent Marketplace",
+  title: "Nomos — Compute-Routed Agent Marketplace",
   description:
     "Orchestrators that decompose goals, classify complexity, and route each subtask to the cheapest Claude model that can do it well.",
 };
@@ -2140,7 +2140,7 @@ MOCK_MODE=0
 - [ ] **Step 3: Write `app/README.md`**
 
 ```markdown
-# AgentMarket
+# Nomos
 
 Compute-routed agent marketplace. An orchestrator decomposes a goal, classifies each subtask
 by complexity, routes each to the cheapest Claude model that can do it well (Haiku / Sonnet / Opus),
@@ -2240,7 +2240,7 @@ pnpm add -g vercel
 ```bash
 cd app && vercel --yes
 ```
-Follow prompts: scope = personal, link to existing = no, project name = `agentmarket` (or whatever user picks), directory = `./`, override settings = no.
+Follow prompts: scope = personal, link to existing = no, project name = `nomos` (or whatever user picks), directory = `./`, override settings = no.
 
 - [ ] **Step 3: Set environment variables**
 
@@ -2269,7 +2269,7 @@ Symptom: orchestration events arrive all at once instead of streaming. Fix: conf
 Edit `app/README.md` to add at the top:
 
 ```markdown
-**Live:** https://agentmarket-xxx.vercel.app
+**Live:** https://nomos-xxx.vercel.app
 ```
 
 ```bash

@@ -6,17 +6,17 @@ type Store = {
   seeded: boolean;
 };
 
-const g = globalThis as unknown as { __agentmarket_store?: Store };
+const g = globalThis as unknown as { __nomos_store?: Store };
 
 export function getStore(): Store {
-  if (!g.__agentmarket_store) {
-    g.__agentmarket_store = {
+  if (!g.__nomos_store) {
+    g.__nomos_store = {
       agents: new Map(),
       runs: new Map(),
       seeded: false,
     };
   }
-  return g.__agentmarket_store;
+  return g.__nomos_store;
 }
 
 export function upsertAgent(agent: Agent): Agent {
