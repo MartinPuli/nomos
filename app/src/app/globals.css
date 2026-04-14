@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #0a0a0f;
+  --bg-elev: #14141c;
+  --bg-elev2: #1c1c28;
+  --border: #2a2a38;
+  --text: #e8e8f0;
+  --text-dim: #8a8aa0;
+  --accent: #7c3aed;
+  --tier-haiku: #22c55e;
+  --tier-sonnet: #3b82f6;
+  --tier-opus: #a855f7;
+  --savings: #f59e0b;
+}
+
+html, body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  min-height: 100vh;
+}
+
+.tier-haiku { color: var(--tier-haiku); }
+.tier-sonnet { color: var(--tier-sonnet); }
+.tier-opus { color: var(--tier-opus); }
+.bg-tier-haiku { background-color: color-mix(in srgb, var(--tier-haiku) 18%, transparent); border-color: var(--tier-haiku); }
+.bg-tier-sonnet { background-color: color-mix(in srgb, var(--tier-sonnet) 18%, transparent); border-color: var(--tier-sonnet); }
+.bg-tier-opus { background-color: color-mix(in srgb, var(--tier-opus) 18%, transparent); border-color: var(--tier-opus); }
+
+.card {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+}
+.card-hover:hover {
+  border-color: var(--accent);
+  transition: border-color 0.15s ease;
+}
