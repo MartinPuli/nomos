@@ -64,3 +64,21 @@ export type OrchestrationEvent =
   | { type: "task_failed"; subtask_id: string; error: string }
   | { type: "run_completed"; total_actual_eth: number; total_naive_eth: number; saved_pct: number }
   | { type: "error"; message: string };
+
+export interface Team {
+  id: string;
+  slug: string;
+  name: string;
+  tagline: string;
+  description: string;
+  specialty: string;
+  member_ids: string[];
+  skills_union: string[];
+  tasks_completed: number;
+  avg_tokens_per_task: number;
+  avg_savings_pct: number;
+  rent_price_eth_per_task: number;
+  quality: number;
+  cover_emoji: string;
+  created_at: string;
+}
