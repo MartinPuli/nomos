@@ -52,11 +52,13 @@ export async function classify(description: string): Promise<Classification> {
     system: SYSTEM_PROMPT,
     messages: [{ role: "user", content: `Subtask: ${normalizedDescription}` }],
   });
-  const text = res.content
+  const raw = res.content
     .filter((c): c is Anthropic.TextBlock => c.type === "text")
     .map((c) => c.text)
     .join("")
     .trim();
+  // Strip markdown code fences that models sometimes add despite the prompt
+  const text = raw.replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/i, "").trim();
   let parsed: Classification;
   try {
     parsed = JSON.parse(text) as Classification;

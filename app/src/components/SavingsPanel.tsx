@@ -1,4 +1,4 @@
-import { ethToUsdc, ETH_PRICE_USD } from "@/lib/pricing";
+import { ethToUsdc } from "@/lib/pricing";
 
 export function SavingsPanel({
   naive,
@@ -11,10 +11,10 @@ export function SavingsPanel({
   savedPct: number;
   live: boolean;
 }) {
-  const fmt      = (n: number) => n.toFixed(6);
-  const ratio    = naive > 0 ? actual / naive : 0.28;
-  const savedEth = Math.max(0, naive - actual);
-  const isGood   = savedPct >= 50;
+  const ratio     = naive > 0 ? actual / naive : 0.28;
+  const savedEth  = Math.max(0, naive - actual);
+  const costRatio = naive > 0 && actual > 0 ? naive / actual : 5;
+  const isGood    = savedPct >= 50;
 
   return (
     <div className="card" style={{ overflow: "hidden" }}>
@@ -79,7 +79,7 @@ export function SavingsPanel({
             </div>
           </div>
 
-          {/* USD callout */}
+          {/* Cost ratio callout */}
           <div
             style={{
               textAlign: "right", padding: "14px 16px", borderRadius: "14px",
@@ -88,15 +88,15 @@ export function SavingsPanel({
             }}
           >
             <div style={{ fontSize: "0.625rem", textTransform: "uppercase", letterSpacing: "0.22em", color: "var(--ink)", marginBottom: "4px", fontWeight: 600 }}>
-              10k tasks/day
+              vs all-Opus
             </div>
             <div
               className="font-display"
               style={{ fontSize: "1.25rem", color: "var(--accent)", lineHeight: 1 }}
             >
-              ${((naive - actual) * 10000 * ETH_PRICE_USD).toFixed(0)}
+              {costRatio.toFixed(1)}×
             </div>
-            <div style={{ fontSize: "0.6875rem", color: "var(--accent)", opacity: 0.7, marginTop: "2px" }}>saved/day</div>
+            <div style={{ fontSize: "0.6875rem", color: "var(--accent)", opacity: 0.7, marginTop: "2px" }}>cheaper</div>
           </div>
         </div>
 
