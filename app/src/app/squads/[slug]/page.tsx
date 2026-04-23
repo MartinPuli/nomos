@@ -53,7 +53,7 @@ export default async function SquadDetail({
               </span>
             )}
           </div>
-          <h1 className="text-4xl font-bold">{team.name}</h1>
+          <h1 className="font-display text-4xl">{team.name}</h1>
           <p className="text-lg text-[var(--text-dim)]">{team.tagline}</p>
         </div>
         <Link

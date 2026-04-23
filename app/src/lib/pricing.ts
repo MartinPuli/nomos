@@ -62,7 +62,7 @@ export function computeSavings(subtasks: SubTask[]) {
   };
 }
 
-export const ETH_PRICE_USD = 3200;
+export const ETH_PRICE_USD = Number(process.env.NEXT_PUBLIC_ETH_PRICE_USD ?? "3200");
 
 export function ethToUsd(eth: number, ethPriceUsd = ETH_PRICE_USD): number {
   return Number((eth * ethPriceUsd).toFixed(4));

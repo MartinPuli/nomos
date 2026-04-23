@@ -139,6 +139,19 @@ export type Vertical =
   | "data"
   | "accounting";
 
+export type AssetCategory = "image" | "font" | "color" | "data" | "document";
+
+export interface Asset {
+  id: string;
+  name: string;
+  category: AssetCategory;
+  mime_type: string;
+  url: string;
+  size: number;
+  uploaded_at: string;
+  tags: string[];
+}
+
 export interface SubscriptionTier {
   id: string;
   name: string;

@@ -1,8 +1,9 @@
-import type { Agent, OrchestrationRun } from "./types";
+import type { Agent, Asset, OrchestrationRun } from "./types";
 
 type Store = {
   agents: Map<string, Agent>;
   runs: Map<string, OrchestrationRun>;
+  assets: Map<string, Asset>;
   seeded: boolean;
 };
 
@@ -13,6 +14,7 @@ export function getStore(): Store {
     g.__nomos_store = {
       agents: new Map(),
       runs: new Map(),
+      assets: new Map(),
       seeded: false,
     };
   }
@@ -51,4 +53,24 @@ export function listRuns(limit = 6): OrchestrationRun[] {
         new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
     )
     .slice(0, limit);
+}
+
+export function saveAsset(asset: Asset): Asset {
+  getStore().assets.set(asset.id, asset);
+  return asset;
+}
+
+export function getAsset(id: string): Asset | undefined {
+  return getStore().assets.get(id);
+}
+
+export function deleteAsset(id: string): boolean {
+  return getStore().assets.delete(id);
+}
+
+export function listAssets(category?: string): Asset[] {
+  const all = Array.from(getStore().assets.values()).sort(
+    (a, b) => new Date(b.uploaded_at).getTime() - new Date(a.uploaded_at).getTime(),
+  );
+  return category ? all.filter((a) => a.category === category) : all;
 }

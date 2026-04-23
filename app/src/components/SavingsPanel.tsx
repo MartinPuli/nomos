@@ -1,4 +1,4 @@
-import { ethToUsdc } from "@/lib/pricing";
+import { ethToUsdc, ETH_PRICE_USD } from "@/lib/pricing";
 
 export function SavingsPanel({
   naive,
@@ -94,7 +94,7 @@ export function SavingsPanel({
               className="font-display"
               style={{ fontSize: "1.25rem", color: "var(--accent)", lineHeight: 1 }}
             >
-              ${((naive - actual) * 10000 * 3200).toFixed(0)}
+              ${((naive - actual) * 10000 * ETH_PRICE_USD).toFixed(0)}
             </div>
             <div style={{ fontSize: "0.6875rem", color: "var(--accent)", opacity: 0.7, marginTop: "2px" }}>saved/day</div>
           </div>

@@ -1,3 +1,11 @@
+@font-face {
+  font-family: "Gordon Rounded";
+  src: url("/fonts/Gordon-401253/Gordon Rounded.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,300..800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap");
 @import "tailwindcss";
 
@@ -132,7 +140,7 @@ html, body {
 .tier-bar-opus   { border-top: 2.5px solid var(--tier-opus);   }
 
 /* ─── Typography helpers ─────────────────────────── */
-.font-display { font-family: "Space Grotesk", "DM Sans", sans-serif; font-weight: 700; }
+.font-display { font-family: "Gordon Rounded", "Space Grotesk", "DM Sans", sans-serif; font-weight: 400; }
 .font-mono    { font-family: "JetBrains Mono", ui-monospace, monospace; }
 
 /* ─── Animations ─────────────────────────────────── */

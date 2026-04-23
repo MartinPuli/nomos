@@ -10,6 +10,7 @@ const LINKS = [
   { href: "/orchestrate", label: "Run a team"   },
   { href: "/register",    label: "Add agent"    },
   { href: "/inbox",       label: "Inbox"        },
+  { href: "/assets",      label: "Assets"       },
 ];
 
 export function Nav() {
