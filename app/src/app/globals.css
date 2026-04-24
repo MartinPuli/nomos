@@ -148,7 +148,7 @@ html, body {
 .tier-bar-opus   { border-top: 2.5px solid var(--tier-opus);   }
 
 /* ─── Typography helpers ─────────────────────────── */
-.font-display { font-family: "Gordon Rounded", "Space Grotesk", "DM Sans", sans-serif; font-weight: 400; }
+.font-display { font-family: "Gordon Rounded", "Space Grotesk", "DM Sans", sans-serif; font-weight: 400; line-height: 1.15; }
 .font-mono    { font-family: "JetBrains Mono", ui-monospace, monospace; }
 .font-nomos   { font-family: "Modak", sans-serif; }
 
