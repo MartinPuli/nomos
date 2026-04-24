@@ -71,7 +71,7 @@ export default function AssetsPage() {
     <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
       {/* Header */}
       <div>
-        <h1 className="font-display" style={{ fontSize: "clamp(2rem, 5vw, 3rem)", margin: 0, lineHeight: 1.05 }}>
+        <h1 className="font-display" style={{ fontSize: "clamp(2rem, 5vw, 3rem)", margin: 0, lineHeight: 1.15 }}>
           Asset library
         </h1>
         <p style={{ color: "var(--text-dim)", marginTop: "8px", fontSize: "0.9375rem" }}>

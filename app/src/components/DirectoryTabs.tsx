@@ -54,7 +54,7 @@ export function DirectoryTabs({
                 fontSize: "clamp(2rem, 5vw, 3.5rem)",
                 color: "var(--ink)",
                 margin: "8px 0 0",
-                lineHeight: 0.95,
+                lineHeight: 1.15,
                 letterSpacing: "0.005em",
               }}
             >
@@ -106,7 +106,7 @@ export function DirectoryTabs({
                   className="font-display"
                   style={{
                     fontSize: "2rem",
-                    lineHeight: 0.95,
+                    lineHeight: 1.15,
                     letterSpacing: "0.005em",
                     color: isActive ? "var(--cream)" : "var(--ink)",
                   }}
