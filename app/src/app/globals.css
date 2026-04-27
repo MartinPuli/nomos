@@ -1,3 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,300..800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap");
+@import "tailwindcss";
+
 @font-face {
   font-family: "Gordon Rounded";
   src: url("/fonts/Gordon-401253/Gordon Rounded.otf") format("opentype");
@@ -13,9 +16,6 @@
   font-style: normal;
   font-display: swap;
 }
-
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,300..800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap");
-@import "tailwindcss";
 
 /* ─── Design tokens ─────────────────────────────── */
 :root {
