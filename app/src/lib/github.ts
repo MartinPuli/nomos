@@ -1,13 +1,8 @@
-import type { Agent, AgentMetrics, AgentRegistrationInput } from "./types";
+import type { Agent, AgentMetrics, AgentRegistrationInput, Tier } from "./types";
 import { agentQualityScore } from "./pricing";
 import { ApiError } from "./http";
 
-const DEFAULT_METRICS: AgentMetrics = {
-  avg_tokens_per_task: { simple: 400, moderate: 1200, complex: 2800 },
-  tasks_completed: 0,
-  tasks_attempted: 0,
-  success_rate: 0.75,
-};
+const VALID_TIERS: readonly Tier[] = ["simple", "moderate", "complex"];
 
 function gh(path: string): Promise<Response> {
   const headers: Record<string, string> = {
@@ -17,7 +12,8 @@ function gh(path: string): Promise<Response> {
   if (process.env.GITHUB_TOKEN) {
     headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
   }
-  return fetch(`https://api.github.com${path}`, { headers });
+  // no-store: GitHub file contents change between pushes; never serve stale cache
+  return fetch(`https://api.github.com${path}`, { headers, cache: "no-store" });
 }
 
 function parseGithubUrl(url: string): { owner: string; repo: string } {
@@ -93,40 +89,6 @@ async function commitsLast90d(owner: string, repo: string): Promise<number> {
   return Array.isArray(arr) ? arr.length : 0;
 }
 
-function normalizePositiveNumber(value: unknown, fallback: number): number {
-  return typeof value === "number" && Number.isFinite(value) && value > 0
-    ? value
-    : fallback;
-}
-
-function normalizeNonNegativeNumber(value: unknown, fallback: number): number {
-  return typeof value === "number" && Number.isFinite(value) && value >= 0
-    ? value
-    : fallback;
-}
-
-function normalizeSuccessRate(value: unknown, fallback: number): number {
-  return typeof value === "number" && Number.isFinite(value) && value >= 0 && value <= 1
-    ? value
-    : fallback;
-}
-
-function normalizeMetrics(value: unknown): AgentMetrics {
-  if (!value || typeof value !== "object") return DEFAULT_METRICS;
-  const candidate = value as Partial<AgentMetrics>;
-  const avg = candidate.avg_tokens_per_task ?? {};
-  return {
-    avg_tokens_per_task: {
-      simple: normalizePositiveNumber(avg.simple, DEFAULT_METRICS.avg_tokens_per_task.simple!),
-      moderate: normalizePositiveNumber(avg.moderate, DEFAULT_METRICS.avg_tokens_per_task.moderate!),
-      complex: normalizePositiveNumber(avg.complex, DEFAULT_METRICS.avg_tokens_per_task.complex!),
-    },
-    tasks_completed: normalizeNonNegativeNumber(candidate.tasks_completed, DEFAULT_METRICS.tasks_completed),
-    tasks_attempted: normalizeNonNegativeNumber(candidate.tasks_attempted, DEFAULT_METRICS.tasks_attempted),
-    success_rate: normalizeSuccessRate(candidate.success_rate, DEFAULT_METRICS.success_rate),
-  };
-}
-
 function parseSkills(md: string): string[] {
   const lines = md.split(/\r?\n/);
   const out: string[] = [];
@@ -135,6 +97,79 @@ function parseSkills(md: string): string[] {
     if (m) out.push(m[1].trim().toLowerCase().replace(/\s+/g, "_"));
   }
   return out.slice(0, 20);
+}
+
+interface StrictManifest {
+  avg_tokens_per_task: { simple: number; moderate: number; complex: number };
+  tasks_completed: number;
+  tasks_attempted: number;
+  success_rate: number;
+  default_tier: Tier;
+}
+
+function requirePositiveNumber(obj: Record<string, unknown>, field: string, hint: string): number {
+  const v = obj[field];
+  if (typeof v !== "number" || !Number.isFinite(v) || v <= 0) {
+    throw new ApiError(422, "manifest_invalid_metrics",
+      `memory/metrics.json: "${field}" must be a positive number — ${hint}`);
+  }
+  return v;
+}
+
+function requireNonNegativeInt(obj: Record<string, unknown>, field: string): number {
+  const v = obj[field];
+  if (typeof v !== "number" || !Number.isInteger(v) || v < 0) {
+    throw new ApiError(422, "manifest_invalid_metrics",
+      `memory/metrics.json: "${field}" must be a non-negative integer`);
+  }
+  return v;
+}
+
+function parseStrictManifest(raw: unknown): StrictManifest {
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) {
+    throw new ApiError(422, "manifest_invalid_metrics",
+      `memory/metrics.json must be a JSON object`);
+  }
+  const m = raw as Record<string, unknown>;
+
+  // default_tier
+  if (!m.default_tier || !VALID_TIERS.includes(m.default_tier as Tier)) {
+    throw new ApiError(422, "manifest_invalid_metrics",
+      `memory/metrics.json: "default_tier" must be one of "simple" | "moderate" | "complex"`);
+  }
+
+  // avg_tokens_per_task
+  if (!m.avg_tokens_per_task || typeof m.avg_tokens_per_task !== "object" || Array.isArray(m.avg_tokens_per_task)) {
+    throw new ApiError(422, "manifest_invalid_metrics",
+      `memory/metrics.json: "avg_tokens_per_task" must be an object with keys simple, moderate, complex (each a positive number)`);
+  }
+  const apt = m.avg_tokens_per_task as Record<string, unknown>;
+  const simple   = requirePositiveNumber(apt, "simple",   'e.g. { "simple": 300, "moderate": 900, "complex": 2400 }');
+  const moderate = requirePositiveNumber(apt, "moderate", 'e.g. { "simple": 300, "moderate": 900, "complex": 2400 }');
+  const complex  = requirePositiveNumber(apt, "complex",  'e.g. { "simple": 300, "moderate": 900, "complex": 2400 }');
+
+  // tasks_completed and tasks_attempted
+  const tasks_completed = requireNonNegativeInt(m, "tasks_completed");
+  const tasks_attempted = requireNonNegativeInt(m, "tasks_attempted");
+  if (tasks_attempted < tasks_completed) {
+    throw new ApiError(422, "manifest_invalid_metrics",
+      `memory/metrics.json: "tasks_attempted" (${tasks_attempted}) must be >= "tasks_completed" (${tasks_completed})`);
+  }
+
+  // success_rate
+  const sr = m.success_rate;
+  if (typeof sr !== "number" || !Number.isFinite(sr) || sr < 0 || sr > 1) {
+    throw new ApiError(422, "manifest_invalid_metrics",
+      `memory/metrics.json: "success_rate" must be a number between 0 and 1 inclusive`);
+  }
+
+  return {
+    avg_tokens_per_task: { simple, moderate, complex },
+    tasks_completed,
+    tasks_attempted,
+    success_rate: sr,
+    default_tier: m.default_tier as Tier,
+  };
 }
 
 export async function registerFromGithub(
@@ -147,25 +182,44 @@ export async function registerFromGithub(
     commitsLast90d(owner, repo),
   ]);
 
-  const parsedSkills =
-    skillsMd && parseSkills(skillsMd).length > 0
-      ? parseSkills(skillsMd)
-      : ["general"];
+  // Strict skills.md validation
+  if (skillsMd === null) {
+    throw new ApiError(422, "manifest_missing_skills_md",
+      `${owner}/${repo} is missing skills.md — create it at the repo root with bullet-listed skills (e.g. "- typescript")`);
+  }
+  const parsedSkills = parseSkills(skillsMd);
+  if (parsedSkills.length === 0) {
+    throw new ApiError(422, "manifest_empty_skills",
+      `skills.md in ${owner}/${repo} has no parseable skills — each skill must be a bullet line starting with "- " or "* " (2–40 chars)`);
+  }
+
+  // Strict memory/metrics.json validation
+  if (metricsJson === null) {
+    throw new ApiError(422, "manifest_missing_metrics_json",
+      `${owner}/${repo} is missing memory/metrics.json — create it with: default_tier, avg_tokens_per_task, tasks_completed, tasks_attempted, success_rate`);
+  }
+  let rawParsed: unknown;
+  try {
+    rawParsed = JSON.parse(metricsJson);
+  } catch {
+    throw new ApiError(422, "manifest_invalid_json",
+      `memory/metrics.json in ${owner}/${repo} is not valid JSON`);
+  }
+  const manifest = parseStrictManifest(rawParsed);
+
   const skills = Array.from(
     new Set([...parsedSkills, ...(input.extra_skills ?? [])]),
   ).slice(0, 30);
 
-  let metrics: AgentMetrics = DEFAULT_METRICS;
-  if (metricsJson) {
-    try {
-      metrics = normalizeMetrics(JSON.parse(metricsJson));
-    } catch {
-      metrics = DEFAULT_METRICS;
-    }
-  }
+  const metrics: AgentMetrics = {
+    avg_tokens_per_task: manifest.avg_tokens_per_task,
+    tasks_completed: manifest.tasks_completed,
+    tasks_attempted: manifest.tasks_attempted,
+    success_rate: manifest.success_rate,
+  };
 
   const skills_count = skills.length;
-  const quality = agentQualityScore(skills_count, commits90d, metrics.success_rate);
+  const quality = agentQualityScore(skills_count, commits90d, manifest.success_rate);
 
   const defaultName = repo.replace(/[-_]/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 
@@ -176,7 +230,7 @@ export async function registerFromGithub(
     description: input.tagline ?? `Registered from github.com/${owner}/${repo}`,
     source: "github",
     skills,
-    default_tier: input.default_tier ?? "moderate",
+    default_tier: manifest.default_tier,
     github_url: `https://github.com/${owner}/${repo}`,
     metrics,
     skills_count,

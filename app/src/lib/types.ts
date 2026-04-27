@@ -46,7 +46,6 @@ export interface AgentRegistrationInput {
   handle?: string;
   tagline?: string;
   specialty?: string;
-  default_tier?: Tier;
   extra_skills?: string[];
   rent_price_eth_per_task?: number;
   maintainer_email?: string;

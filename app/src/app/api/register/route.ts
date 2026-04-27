@@ -10,12 +10,11 @@ import {
   parseJsonBody,
   requireTrimmedString,
 } from "@/lib/http";
-import type { AgentRegistrationInput, Tier } from "@/lib/types";
+import type { AgentRegistrationInput } from "@/lib/types";
 
 export const runtime = "nodejs";
 export const maxDuration = 30;
 
-const TIERS: readonly Tier[] = ["simple", "moderate", "complex"] as const;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const ETH_RE = /^0x[a-fA-F0-9]{40}$/;
 
@@ -25,7 +24,6 @@ interface RegisterBody {
   handle?: string;
   tagline?: string;
   specialty?: string;
-  default_tier?: string;
   extra_skills?: string;
   rent_price_eth_per_task?: number | string;
   maintainer_email?: string;
@@ -40,12 +38,6 @@ function parseExtraSkills(raw: string | undefined): string[] | undefined {
     .map((s) => s.trim().toLowerCase().replace(/\s+/g, "_"))
     .filter((s) => /^[a-z0-9_\-]{2,40}$/.test(s));
   return skills.length ? skills.slice(0, 20) : undefined;
-}
-
-function parseTier(raw: string | undefined): Tier | undefined {
-  if (!raw) return undefined;
-  if ((TIERS as readonly string[]).includes(raw)) return raw as Tier;
-  throw new ApiError(400, "invalid_request", `default_tier must be one of ${TIERS.join(", ")}`);
 }
 
 function parseRentPrice(raw: number | string | undefined): number | undefined {
@@ -89,7 +81,6 @@ export async function POST(req: Request) {
       handle: optionalTrimmedString(body.handle, "handle", { maxLength: 60 }),
       tagline: optionalTrimmedString(body.tagline, "tagline", { maxLength: 140 }),
       specialty: optionalTrimmedString(body.specialty, "specialty", { maxLength: 60 }),
-      default_tier: parseTier(optionalTrimmedString(body.default_tier, "default_tier")),
       extra_skills: parseExtraSkills(optionalTrimmedString(body.extra_skills, "extra_skills", { maxLength: 500 })),
       rent_price_eth_per_task: parseRentPrice(body.rent_price_eth_per_task),
       maintainer_email: parseEmail(optionalTrimmedString(body.maintainer_email, "maintainer_email", { maxLength: 120 })),
