@@ -1,4 +1,5 @@
 import { TierBadge } from "./TierBadge";
+import { TaskOutputViewer } from "./TaskOutputViewer";
 import { ethToUsdc } from "@/lib/pricing";
 import type { SubTask, Agent } from "@/lib/types";
 
@@ -88,24 +89,11 @@ export function TaskRow({ task, agent }: { task: SubTask; agent?: Agent }) {
         </div>
       )}
 
-      {/* Output (collapsible) */}
+      {/* Output */}
       {task.status === "done" && task.output && (
-        <details style={{ fontSize: "0.75rem" }}>
-          <summary style={{ cursor: "pointer", color: "var(--text-muted)", userSelect: "none" }}>
-            View output
-          </summary>
-          <pre
-            style={{
-              marginTop: "8px", whiteSpace: "pre-wrap", wordBreak: "break-word",
-              background: "var(--bg-elev2)", border: "1px solid var(--border)",
-              borderRadius: "8px", padding: "12px",
-              color: "var(--text)", fontFamily: "monospace", fontSize: "0.75rem",
-              lineHeight: 1.55, maxHeight: "200px", overflowY: "auto",
-            }}
-          >
-            {task.output}
-          </pre>
-        </details>
+        <div style={{ borderTop: "1px solid var(--border)", paddingTop: "10px" }}>
+          <TaskOutputViewer rawOutput={task.output} />
+        </div>
       )}
 
       {/* Error */}

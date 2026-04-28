@@ -3,7 +3,7 @@
  *
  * The system prompt is built from the agent (name, description, skills) + the
  * classifier's tier, which nudges verbosity. Max output tokens scale with
- * tier (haiku 512 → opus 2048). Returns the produced text plus real token
+ * tier (haiku 1500 → opus 2048). Returns the produced text plus real token
  * usage from the API response so pricing uses actual, not estimated, tokens.
  */
 import Anthropic from "@anthropic-ai/sdk";
@@ -15,7 +15,22 @@ function buildSubagentSystem(agent: Agent, tier: string): string {
   return `You are ${agent.name} (${agent.handle}). ${agent.description}
 
 Your skills: ${agent.skills.join(", ")}.
-You are operating at the "${tier}" complexity tier. Be concise, direct, and lead with your core specialty. Produce exactly one deliverable — no preamble, no meta-commentary. Target length: short to medium.`;
+You are operating at the "${tier}" complexity tier. Be concise, direct, and lead with your core specialty. Produce exactly one deliverable — no preamble, no meta-commentary. Target length: short to medium.
+
+You MUST respond with a JSON object matching this schema, and NOTHING else.
+Do NOT wrap it in markdown fences. Do NOT add any preamble.
+
+{
+  "summary": "<1-2 sentence high-level description of what you did>",
+  "body_markdown": "<the main answer, in GitHub-flavored markdown>",
+  "artifacts": [
+    { "type": "code", "title": "Example", "language": "ts", "content": "..." },
+    { "type": "table", "title": "Comparison", "columns": ["A", "B"], "rows": [["x", "y"]] }
+  ],
+  "next_steps": ["Optional bullet points of what to do next"]
+}
+
+The "artifacts" and "next_steps" fields are optional — omit them if not relevant.`;
 }
 
 export interface ExecutionResult {
@@ -26,7 +41,7 @@ export interface ExecutionResult {
 }
 
 const MAX_OUTPUT_TOKENS: Record<ModelId, number> = {
-  haiku: 512,
+  haiku: 1500,
   sonnet: 1024,
   opus: 2048,
 };

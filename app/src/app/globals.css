@@ -476,3 +476,28 @@ html, body {
   50%      { transform: translateY(5px); opacity: 1;    }
 }
 .scroll-hint { animation: scroll-hint 2.4s ease-in-out infinite; }
+
+/* ─── Task output — markdown tables ─────────────────── */
+.task-output table {
+  border: 1.5px solid var(--ink, #1F1F1E);
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 12px 0;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+.task-output th {
+  background: #FFE9C9;
+  border-bottom: 1.5px solid var(--ink, #1F1F1E);
+  padding: 8px 12px;
+  text-align: left;
+  font-weight: 700;
+}
+.task-output td {
+  padding: 8px 12px;
+  border-bottom: 1px solid rgba(31, 31, 30, 0.1);
+}
+.task-output tr:last-child td {
+  border-bottom: none;
+}

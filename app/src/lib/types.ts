@@ -159,3 +159,17 @@ export interface SubscriptionTier {
   sla_hours: number;
   features: string[];
 }
+
+export type SubtaskArtifact =
+  | { type: "code"; title: string; language: string; content: string }
+  | { type: "file"; title: string; filename: string; content: string }
+  | { type: "link"; title: string; url: string; description?: string }
+  | { type: "table"; title: string; columns: string[]; rows: string[][] }
+  | { type: "quote"; title?: string; content: string; source?: string };
+
+export type SubtaskOutput = {
+  summary: string;
+  body_markdown: string;
+  artifacts?: SubtaskArtifact[];
+  next_steps?: string[];
+};
